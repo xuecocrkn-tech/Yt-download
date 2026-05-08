@@ -1,6 +1,6 @@
 # Simple YouTube Downloader
 
-A Python script to download YouTube Videos (High Quality) or Thumbnails.
+A Python script to download YouTube Videos (High Quality) or Thumbnails, Mp3 Video.
 Works on Android (Termux) and PC (Windows/Linux/Mac).
 
 ## Features
