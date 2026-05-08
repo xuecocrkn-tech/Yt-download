@@ -11,7 +11,7 @@ def run():
 
     # Set save path
     if device == '1':
-        save_path = "/sdcard/Download/%(title)s.%(ext)s"
+        save_path = "/sdcard/Download%(title)s.%(ext)s"
     else:
         save_path = "%(title)s.%(ext)s"
 
@@ -23,7 +23,8 @@ def run():
     print("\n🎬 What would you like to download?")
     print("1. Video (Best quality MP4)")
     print("2. Thumbnail (JPG Image)")
-    action = input("Enter your choice (1 or 2): ")
+    print("3. Audio/Music (MP3)")  # <-- Добавлен новый пункт
+    action = input("Enter your choice (1, 2, or 3): ")
 
     opts = {}
 
@@ -48,6 +49,21 @@ def run():
             }],
         }
         print("\n🖼️  Downloading thumbnail...")
+
+    # <-- Блок для скачивания музыки
+    elif action == '3':
+        opts = {
+            'format': 'bestaudio/best',
+            'outtmpl': save_path,
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': '192',
+            }],
+        }
+        print("\n🎵 Downloading audio (MP3)...")
+        print("⚠️  Note: FFmpeg must be installed for audio conversion.")
+    
     else:
         print("❌ Invalid choice.")
         return
@@ -55,11 +71,15 @@ def run():
     try:
         with yt_dlp.YoutubeDL(opts) as ydl:
             ydl.download([url])
+        
         location = "Downloads folder" if device == '1' else "current folder"
-        print(f"\n✅ Done! File saved in your {location}.")
+        file_type = "Video" if action == '1' else "Thumbnail" if action == '2' else "Audio"
+        print(f"\n✅ Done! {file_type} saved in your {location}.")
+        
     except Exception as e:
         print(f"\n❌ Error: {e}")
+        if action == '3':
+            print("💡 Tip: If you are downloading audio, make sure FFmpeg is installed.")
 
 if __name__ == "__main__":
     run()
-
