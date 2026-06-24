@@ -11,7 +11,7 @@ def run():
 
     # Set save path
     if device == '1':
-        save_path = "/sdcard/Download%(title)s.%(ext)s"
+        save_path = "/sdcard/Download/%(title)s.%(ext)s"
     else:
         save_path = "%(title)s.%(ext)s"
 
